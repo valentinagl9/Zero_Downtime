@@ -24,10 +24,10 @@ services:
         value: "10000"
 
       - key: V1_HOST
-        value: zero-downtime-v1.onrender.com
+        value: zero-downtime-v1.onrender.com:443
 
       - key: V2_HOST
-        value: zero-downtime-v2.onrender.com
+        value: zero-downtime-v2.onrender.com:443
 
       - key: PROXY_SCHEME
         value: https
