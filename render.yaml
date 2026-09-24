@@ -28,3 +28,6 @@ services:
 
       - key: V2_HOST
         value: zero-downtime-v2.onrender.com
+
+      - key: PROXY_SCHEME
+        value: https

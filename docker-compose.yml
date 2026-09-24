@@ -18,6 +18,7 @@ services:
       PORT: 80
       V1_HOST: v1:3001
       V2_HOST: v2:3002
+      PROXY_SCHEME: http
     depends_on:
       - v1
       - v2
