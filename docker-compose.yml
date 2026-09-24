@@ -1,4 +1,3 @@
-version: "3.8"
 
 services:
   v1:
@@ -15,6 +14,10 @@ services:
     build: ./nginx
     ports:
       - "8080:80"
+    environment:
+      PORT: 80
+      V1_HOSTPORT: v1:3001
+      V2_HOSTPORT: v2:3002
     depends_on:
       - v1
       - v2

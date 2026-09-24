@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: zero-downtime-v1
+    runtime: docker
+    dockerfilePath: ./app/v1/Dockerfile
+    dockerContext: ./app/v1
+    plan: free
+
+  - type: web
+    name: zero-downtime-v2
+    runtime: docker
+    dockerfilePath: ./app/v2/Dockerfile
+    dockerContext: ./app/v2
+    plan: free
+
+  - type: web
+    name: zero-downtime-nginx
+    runtime: docker
+    dockerfilePath: ./nginx/Dockerfile
+    dockerContext: ./nginx
+    plan: free
+    envVars:
+      - key: PORT
+        value: "10000"
+
+      - key: V1_HOSTPORT
+        fromService:
+          type: web
+          name: zero-downtime-v1
+          property: hostport
+
+      - key: V2_HOSTPORT
+        fromService:
+          type: web
+          name: zero-downtime-v2
+          property: hostport
