@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  v1:
+    build: ./app/v1
+    ports:
+      - "3001:3001"
+
+  v2:
+    build: ./app/v2
+    ports:
+      - "3002:3002"
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - v1
+      - v2
