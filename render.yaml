@@ -23,14 +23,8 @@ services:
       - key: PORT
         value: "10000"
 
-      - key: V1_HOSTPORT
-        fromService:
-          type: web
-          name: zero-downtime-v1
-          property: hostport
+      - key: V1_HOST
+        value: zero-downtime-v1.onrender.com
 
-      - key: V2_HOSTPORT
-        fromService:
-          type: web
-          name: zero-downtime-v2
-          property: hostport
+      - key: V2_HOST
+        value: zero-downtime-v2.onrender.com

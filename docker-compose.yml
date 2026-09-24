@@ -16,8 +16,8 @@ services:
       - "8080:80"
     environment:
       PORT: 80
-      V1_HOSTPORT: v1:3001
-      V2_HOSTPORT: v2:3002
+      V1_HOST: v1:3001
+      V2_HOST: v2:3002
     depends_on:
       - v1
       - v2

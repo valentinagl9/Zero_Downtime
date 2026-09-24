@@ -1,6 +1,6 @@
 upstream app_backend {
-    server ${V1_HOSTPORT} weight=95;
-    server ${V2_HOSTPORT} weight=5;
+    server ${V1_HOST} weight=95;
+    server ${V2_HOST} weight=5;
 }
 
 server {
