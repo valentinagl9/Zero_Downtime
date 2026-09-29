@@ -1,12 +1,19 @@
 const express = require('express');
 
 const app = express();
-const port = process.env.PORT || 3002;
+const port = 3002;
+    
+let requestCount = 0;
 
 app.get('/', (req, res) => {
-  res.send('Hello from v2 (Green/Canary)!');
+  requestCount += 1;
+  console.log(`v2 request count: ${requestCount}`);
+  res.send(`Hello from v2 (Green/Canary)! Requests: ${requestCount}`);
 });
 
-app.listen(port, '0.0.0.0', () => {
-  console.log(`v2 running on ${port}`);
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy', version: 'v2' });
 });
+
+app.listen(port, () => 
+  console.log(`v2 running on ${port}`));

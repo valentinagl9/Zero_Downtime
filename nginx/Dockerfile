@@ -1,5 +1,2 @@
-FROM nginx:alpine
-
-COPY nginx.conf.template /etc/nginx/templates/default.conf.template
-
-EXPOSE 80
+FROM nginx:1.27-alpine
+COPY nginx.conf /etc/nginx/nginx.conf

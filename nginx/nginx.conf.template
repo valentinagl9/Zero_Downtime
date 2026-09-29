@@ -1,4 +1,4 @@
-vsplit_clients "${remote_addr}${request_uri}" $backend_host {
+split_clients "${remote_addr}${request_uri}" $backend_host {
     95% ${V1_HOST};
     5%  ${V2_HOST};
 }

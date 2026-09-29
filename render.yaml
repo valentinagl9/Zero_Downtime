@@ -30,3 +30,5 @@ services:
         value: zero-downtime-v2.onrender.com
       - key: PROXY_SCHEME
         value: https
+      - key: NGINX_ENVSUBST_FILTER
+        value: "PORT|DNS_RESOLVER|V1_HOST|V2_HOST|PROXY_SCHEME"
