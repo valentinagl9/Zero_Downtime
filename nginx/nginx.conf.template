@@ -1,18 +1,15 @@
-split_clients "${remote_addr}${request_uri}" $backend_host {
-    95% ${V1_HOST};
-    5%  ${V2_HOST};
+upstream app_backend {
+    server ${V1_HOST} weight=95;
+    server ${V2_HOST} weight=5;
 }
 
 server {
     listen ${PORT};
 
-    resolver ${DNS_RESOLVER} valid=10s;
-
     location / {
-        proxy_ssl_server_name on;
-        proxy_ssl_name $backend_host;
-
-        proxy_set_header Host $backend_host;
-        proxy_pass ${PROXY_SCHEME}://$backend_host;
+        proxy_pass ${PROXY_SCHEME}://app_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }

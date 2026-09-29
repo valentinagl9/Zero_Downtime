@@ -23,6 +23,12 @@ services:
     build: ./nginx
     ports:
       - "8080:80"
+    environment:
+      PORT: "80"
+      V1_HOST: "v1:3001"
+      V2_HOST: "v2:3002"
+      PROXY_SCHEME: "http"
+      NGINX_ENVSUBST_FILTER: "PORT|V1_HOST|V2_HOST|PROXY_SCHEME"
     depends_on:
       v1:
         condition: service_healthy
