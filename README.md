@@ -443,6 +443,58 @@ zero_downtime-v2-1      zero_downtime-v2                                        
 docker compose down
 ```
 
+## Despliegue en Producion (Reder)
+
+El sistema se encuentra desplegado y operativo en la nube utilizando **Render**, implementando una arquitectura de despliegue **Canary Deployment** gestionada por Nginx como Reverse Proxy.
+
+### Endpoints Publicos
+
+| Servicio | Rol | URL Pública |
+| :--- | :--- | :--- |
+| **Nginx Proxy** | Traffic Splitter / Entrypoint | `https://zero-downtime-nginx.onrender.com` |
+| **App v1** | Version Blue (95% del tráfico) | `https://zero-downtime-v1.onrender.com` |
+| **App v2** | Version Green/Canary (5% del tráfico) | `https://zero-downtime-v2.onrender.com` |
+
+### Verificacion de Estado (Health Checks)
+
+Comprobación del estado individual de los microservicios en Render:
+
+```Bash
+curl -s https://zero-downtime-v1.onrender.com/health && echo ""
+curl -s https://zero-downtime-v2.onrender.com/health && echo ""
+```
+
+Resultado:
+
+```console
+{"status":"healthy","version":"v1"}
+{"status":"healthy","version":"v2"}
+```
+
+### Pruebas de Distribucion de Trafico
+
+```Bash
+for i in {1..100}; do curl -s "https://zero-downtime-nginx.onrender.com/?req=$i"; echo ""; done | grep -oE "v1|v2" | sort | uniq -c
+```
+Result:
+
+```console
+  98 v1
+   2 v2
+```
+
+### Latencia y Respuesta del Servidor
+
+```Bash
+curl -o /dev/null -s -w "HTTP Status: %{http_code} | Total Time: %{time_total}s\n" https://zero-downtime-nginx.onrender.com/
+```
+
+Result:
+
+```console
+HTTP Status: 200 | Total Time: 0.547713s
+```
+
 ## Notes
 
 - Request counters are intentionally stored in memory for teaching purposes and reset whenever a container restarts.
