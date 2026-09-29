@@ -22,6 +22,8 @@ services:
     envVars:
       - key: PORT
         value: "10000"
+      - key: DNS_RESOLVER
+        value: "1.1.1.1 8.8.8.8"
       - key: V1_HOST
         value: zero-downtime-v1.onrender.com
       - key: V2_HOST
